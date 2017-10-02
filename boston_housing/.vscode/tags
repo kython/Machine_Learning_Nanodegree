@@ -1,0 +1,21 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+DecisionTreeRegressor	../visuals.py	/^from sklearn.tree import DecisionTreeRegressor$/;"	kind:namespace	line:15
+ModelComplexity	../visuals.py	/^def ModelComplexity(X, y):$/;"	kind:function	line:72
+ModelLearning	../visuals.py	/^def ModelLearning(X, y):$/;"	kind:function	line:19
+PredictTrials	../visuals.py	/^def PredictTrials(X, y, fitter, data):$/;"	kind:function	line:110
+ShuffleSplit	../visuals.py	/^from sklearn.model_selection import ShuffleSplit, train_test_split$/;"	kind:namespace	line:16
+bj_housing.py	../bj_housing.py	1;"	kind:file	line:1
+get_ipython	../visuals.py	/^from IPython import get_ipython$/;"	kind:namespace	line:8
+learning_curve	../visuals.py	/^from sklearn.model_selection import learning_curve, validation_curve$/;"	kind:namespace	line:14
+matplotlib	../visuals.py	/^import matplotlib.pyplot as pl$/;"	kind:namespace	line:12
+np	../visuals.py	/^import numpy as np$/;"	kind:namespace	line:13
+pl	../visuals.py	/^import matplotlib.pyplot as pl$/;"	kind:namespace	line:12
+train_test_split	../visuals.py	/^from sklearn.model_selection import ShuffleSplit, train_test_split$/;"	kind:namespace	line:16
+validation_curve	../visuals.py	/^from sklearn.model_selection import learning_curve, validation_curve$/;"	kind:namespace	line:14
+visuals.py	../visuals.py	1;"	kind:file	line:1
+warnings	../visuals.py	/^import warnings$/;"	kind:namespace	line:4
