@@ -10,8 +10,9 @@ import matplotlib.pyplot as pl
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split, ShuffleSplit, learning_curve, validation_curve, KFold, GridSearchCV
 from sklearn.metrics import r2_score, make_scorer
+from sklearn.linear_model import LinearRegression
 from sklearn.tree import DecisionTreeRegressor
-
+from sklearn.neural_network import MLPRegressor
 
 ##################
 # 第一步导入数据
@@ -20,7 +21,6 @@ from sklearn.tree import DecisionTreeRegressor
 df = pd.read_csv("bj_housing.csv")
 prices = df["Value"]
 features = df.drop("Value", axis=1)
-
 
 ##################
 # 第二步预处理数据
@@ -178,8 +178,16 @@ r2 = performance_metric(y_test, y_pred)
 
 print "Optimal model has R^2 score {:,.2f} on test data".format(r2)
 
-reg = DecisionTreeRegressor(max_depth=1)
+# 线性回归模型
+reg = LinearRegression()
 reg.fit(X_train, y_train)
 y_pred = reg.predict(X_test)
 r2 = performance_metric(y_test, y_pred)
-print "Optimal model has R^2 score {:,.2f} on test data".format(r2)
+print "Linear Regression model has R^2 score {:,.2f} on test data".format(r2)
+
+# 神经网络
+reg = MLPRegressor(hidden_layer_sizes=(250,), activation="tanh", solver='adam', max_iter=500)
+reg.fit(X_train, y_train)
+y_pred = reg.predict(X_test)
+r2 = performance_metric(y_test, y_pred)
+print "Neural network model has R^2 score {:,.2f} on test data".format(r2)

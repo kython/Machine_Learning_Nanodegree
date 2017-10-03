@@ -14453,7 +14453,7 @@ QZa7JDXIcpekBlnuktSg/wNEsgkZjzAiiQAAAABJRU5ErkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
@@ -14463,7 +14463,9 @@ QZa7JDXIcpekBlnuktSg/wNEsgkZjzAiiQAAAABJRU5ErkJggg==
 <span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span><span class="p">,</span> <span class="n">ShuffleSplit</span><span class="p">,</span> <span class="n">learning_curve</span><span class="p">,</span> <span class="n">validation_curve</span><span class="p">,</span> <span class="n">KFold</span><span class="p">,</span> <span class="n">GridSearchCV</span>
 <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">r2_score</span><span class="p">,</span> <span class="n">make_scorer</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
 <span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.neural_network</span> <span class="kn">import</span> <span class="n">MLPRegressor</span>
 
 
 <span class="c1">##################</span>
@@ -14530,6 +14532,20 @@ QZa7JDXIcpekBlnuktSg/wNEsgkZjzAiiQAAAABJRU5ErkJggg==
 <span class="n">r2</span> <span class="o">=</span> <span class="n">performance_metric</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
 
 <span class="k">print</span> <span class="s2">&quot;Optimal model has R^2 score {:,.2f} on test data&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">r2</span><span class="p">)</span>
+
+<span class="c1"># 线性回归模型</span>
+<span class="n">reg</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">reg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="n">performance_metric</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="k">print</span> <span class="s2">&quot;Linear Regression model has R^2 score {:,.2f} on test data&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">r2</span><span class="p">)</span>
+
+<span class="c1"># 神经网络</span>
+<span class="n">reg</span> <span class="o">=</span> <span class="n">MLPRegressor</span><span class="p">(</span><span class="n">hidden_layer_sizes</span><span class="o">=</span><span class="p">(</span><span class="mi">250</span><span class="p">,),</span> <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;tanh&quot;</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+<span class="n">reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">reg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="n">performance_metric</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="k">print</span> <span class="s2">&quot;Neural network model has R^2 score {:,.2f} on test data&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">r2</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -14548,6 +14564,8 @@ QZa7JDXIcpekBlnuktSg/wNEsgkZjzAiiQAAAABJRU5ErkJggg==
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>max_depth: 8 for the optimal model.
 Optimal model has R^2 score -0.13 on test data
+Linear Regression model has R^2 score 0.35 on test data
+Neural network model has R^2 score 0.54 on test data
 </pre>
 </div>
 </div>
@@ -14571,6 +14589,7 @@ Optimal model has R^2 score -0.13 on test data
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="&#38382;&#39064;14---&#22238;&#31572;">&#38382;&#39064;14 - &#22238;&#31572;<a class="anchor-link" href="#&#38382;&#39064;14---&#22238;&#31572;">&#194;&#182;</a></h3><p>参考波斯顿房价预测模型，用北京房屋数据构建了模型，能对测试数据进行验证，但模型的表现远远低于预期，而且交叉验证尚未提升模型的表现。</p>
+<p>同时简单尝试了，线性回归模型和神经网络模型，效果稍微比决策树回归模型好，但依然差强人意。</p>
 <p>模型表现太差，原因尚不明了，此处留个疑问，待以后倒回来解决。Mentor也可以给一些建议，谢谢。</p>
 
 </div>
