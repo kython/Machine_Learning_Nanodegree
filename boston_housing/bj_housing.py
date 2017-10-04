@@ -186,7 +186,12 @@ r2 = performance_metric(y_test, y_pred)
 print "Linear Regression model has R^2 score {:,.2f} on test data".format(r2)
 
 # 神经网络
-reg = MLPRegressor(hidden_layer_sizes=(250,), activation="tanh", solver='adam', max_iter=500)
+reg = MLPRegressor(
+    hidden_layer_sizes=(250,),
+    activation="logistic",
+    solver='adam',
+    max_iter=500,
+    verbose=True)
 reg.fit(X_train, y_train)
 y_pred = reg.predict(X_test)
 r2 = performance_metric(y_test, y_pred)
