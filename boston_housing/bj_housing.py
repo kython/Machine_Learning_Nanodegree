@@ -5,7 +5,7 @@
 
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as pl
+import matplotlib.pyplot as plt
 
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split, ShuffleSplit, learning_curve, validation_curve, KFold, GridSearchCV
@@ -13,14 +13,44 @@ from sklearn.metrics import r2_score, make_scorer
 from sklearn.linear_model import LinearRegression
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.neural_network import MLPRegressor
+from sklearn.svm import SVR
 
 ##################
 # 第一步导入数据
 ##################
 # 载入北京房屋的数据
 df = pd.read_csv("bj_housing.csv")
-prices = df["Value"]
-features = df.drop("Value", axis=1)
+
+# 可视化房屋售价与各特征关系，
+# fig = plt.figure(figsize=(16, 7))
+# idx_plot = 1
+# for feat in df.columns:
+#     if feat=="Value":
+#         continue
+#     plt.subplot(2, 3, idx_plot)
+#     plt.xlabel(feat)
+#     plt.scatter(df[feat], df["Value"], alpha=0.5)
+#     idx_plot += 1
+# plt.show()
+# fig.savefig("features_prices.png")
+
+# 删除异常值
+df2 = df[(df["Value"]<2000) & (df["Area"]<600) & (df["Floor"]<40) & (df["Year"]>1900)]
+prices = df2["Value"]
+features = df2.drop("Value", axis=1)
+
+# 数据可视化
+# fig = plt.figure(figsize=(16, 7))
+# idx_plot = 1
+# for feat in df2.columns:
+#     if feat=="Value":
+#         continue
+#     plt.subplot(2, 3, idx_plot)
+#     plt.xlabel(feat)
+#     plt.scatter(df2[feat], df2["Value"], alpha=0.5)
+#     idx_plot += 1
+# plt.show()
+# fig.savefig("features_prices_without_outliers.png")
 
 ##################
 # 第二步预处理数据
@@ -43,7 +73,7 @@ def performance_metric(y_true, y_predict):
 ##################
 # 第四步分析模型的表现
 ##################
-# 根据不同的训练集大小，和最大深度，生成学习曲线
+# # 根据不同的训练集大小，和最大深度，生成学习曲线
 # def ModelLearning(X, y):
 #     """ Calculates the performance of several models with varying sizes of training data.
 #         The learning and validation scores for each model are then plotted. """
@@ -56,7 +86,7 @@ def performance_metric(y_true, y_predict):
 #     train_sizes = np.rint(np.linspace(1, X.shape[0]*0.8 - 1, 9)).astype(int)
 
 #     # Create the figure window
-#     fig = pl.figure(figsize=(10,7))
+#     fig = plt.figure(figsize=(10,7))
 
 #     # Create three different models based on max_depth
 #     for k, depth in enumerate([1,3,6,10]):
@@ -99,7 +129,7 @@ def performance_metric(y_true, y_predict):
 
 # ModelLearning(X_train, y_train)
 
-# 根据不同的最大深度参数，生成复杂度曲线
+# # 根据不同的最大深度参数，生成复杂度曲线
 # def ModelComplexity(X, y):
 #     """ Calculates the performance of the model as model complexity increases.
 #         The learning and validation errors rates are then plotted. """
@@ -121,21 +151,21 @@ def performance_metric(y_true, y_predict):
 #     valid_std = np.std(valid_scores, axis=1)
 
 #     # Plot the validation curve
-#     fig = pl.figure(figsize=(7, 5))
-#     pl.title('Decision Tree Regressor Complexity Performance')
-#     pl.plot(max_depth, train_mean, 'o-', color = 'r', label = 'Training Score')
-#     pl.plot(max_depth, valid_mean, 'o-', color = 'g', label = 'Validation Score')
-#     pl.fill_between(max_depth, train_mean - train_std, \
+#     fig = plt.figure(figsize=(7, 5))
+#     plt.title('Decision Tree Regressor Complexity Performance')
+#     plt.plot(max_depth, train_mean, 'o-', color = 'r', label = 'Training Score')
+#     plt.plot(max_depth, valid_mean, 'o-', color = 'g', label = 'Validation Score')
+#     plt.fill_between(max_depth, train_mean - train_std, \
 #         train_mean + train_std, alpha = 0.15, color = 'r')
-#     pl.fill_between(max_depth, valid_mean - valid_std, \
+#     plt.fill_between(max_depth, valid_mean - valid_std, \
 #         valid_mean + valid_std, alpha = 0.15, color = 'g')
     
 #     # Visual aesthetics
-#     pl.legend(loc = 'lower right')
-#     pl.xlabel('Maximum Depth')
-#     pl.ylabel('r2_score')
-#     pl.ylim([-0.05,1.05])
-#     pl.show()
+#     plt.legend(loc = 'lower right')
+#     plt.xlabel('Maximum Depth')
+#     plt.ylabel('r2_score')
+#     plt.ylim([-0.05,1.05])
+#     plt.show()
 #     fig.savefig('complexity_curve.png')
 
 # ModelComplexity(X_train, y_train)
@@ -151,7 +181,7 @@ def fit_model(X, y):
     # 决策树回归函数
     regressor = DecisionTreeRegressor(random_state=0)
     # 决策树待搜索参数空间
-    params = {'max_depth': range(1,11)}
+    params = {'max_depth': range(1,21)}
     # 评分函数
     scoring_fnc = make_scorer(performance_metric)
     # 网格搜索对象
@@ -181,18 +211,21 @@ print "Optimal model has R^2 score {:,.2f} on test data".format(r2)
 # 线性回归模型
 reg = LinearRegression()
 reg.fit(X_train, y_train)
-y_pred = reg.predict(X_test)
-r2 = performance_metric(y_test, y_pred)
+r2 = reg.score(X_test, y_test)
 print "Linear Regression model has R^2 score {:,.2f} on test data".format(r2)
+
+# SVM
+reg = SVR(C=800, gamma=5)
+reg.fit(X_train, y_train)
+r2 = reg.score(X_test, y_test)
+print "SVM Regression model has R^2 score {:,.2f} on test data".format(r2)
 
 # 神经网络
 reg = MLPRegressor(
     hidden_layer_sizes=(250,),
     activation="logistic",
     solver='adam',
-    max_iter=500,
-    verbose=True)
+    max_iter=500)
 reg.fit(X_train, y_train)
-y_pred = reg.predict(X_test)
-r2 = performance_metric(y_test, y_pred)
+r2 = reg.score(X_test, y_test)
 print "Neural network model has R^2 score {:,.2f} on test data".format(r2)
