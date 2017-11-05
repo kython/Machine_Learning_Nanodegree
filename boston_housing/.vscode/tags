@@ -14,45 +14,46 @@ MinMaxScaler	../bj_housing.py	/^from sklearn.preprocessing import MinMaxScaler$/
 ModelComplexity	../visuals.py	/^def ModelComplexity(X, y):$/;"	kind:function	line:72
 ModelLearning	../visuals.py	/^def ModelLearning(X, y):$/;"	kind:function	line:19
 PredictTrials	../visuals.py	/^def PredictTrials(X, y, fitter, data):$/;"	kind:function	line:110
+SVR	../bj_housing.py	/^from sklearn.svm import SVR$/;"	kind:namespace	line:16
 ShuffleSplit	../bj_housing.py	/^from sklearn.model_selection import train_test_split, ShuffleSplit, learning_curve, validation_curve, KFold, GridSearchCV$/;"	kind:namespace	line:11
 ShuffleSplit	../visuals.py	/^from sklearn.model_selection import ShuffleSplit, train_test_split$/;"	kind:namespace	line:16
-activation	../bj_housing.py	/^    activation="logistic",$/;"	kind:variable	line:191
+activation	../bj_housing.py	/^    activation="logistic",$/;"	kind:variable	line:226
 bj_housing.py	../bj_housing.py	1;"	kind:file	line:1
-df	../bj_housing.py	/^df = pd.read_csv("bj_housing.csv")$/;"	kind:variable	line:21
-features	../bj_housing.py	/^features = df.drop("Value", axis=1)$/;"	kind:variable	line:23
-features_scaled	../bj_housing.py	/^features_scaled = pd.DataFrame(scaler.fit_transform(features), columns=features.columns)$/;"	kind:variable	line:30
-fit_model	../bj_housing.py	/^def fit_model(X, y):$/;"	kind:function	line:147
+df	../bj_housing.py	/^df = pd.read_csv("bj_housing.csv")$/;"	kind:variable	line:22
+df2	../bj_housing.py	/^df2 = df[(df["Value"]<2000) & (df["Area"]<600) & (df["Floor"]<40) & (df["Year"]>1900)]$/;"	kind:variable	line:38
+features	../bj_housing.py	/^features = df2.drop("Value", axis=1)$/;"	kind:variable	line:40
+features_scaled	../bj_housing.py	/^features_scaled = pd.DataFrame(scaler.fit_transform(features), columns=features.columns)$/;"	kind:variable	line:60
+fit_model	../bj_housing.py	/^def fit_model(X, y):$/;"	kind:function	line:177
 get_ipython	../visuals.py	/^from IPython import get_ipython$/;"	kind:namespace	line:8
-hidden_layer_sizes	../bj_housing.py	/^    hidden_layer_sizes=(250,),$/;"	kind:variable	line:190
+hidden_layer_sizes	../bj_housing.py	/^    hidden_layer_sizes=(250,),$/;"	kind:variable	line:225
 learning_curve	../bj_housing.py	/^from sklearn.model_selection import train_test_split, ShuffleSplit, learning_curve, validation_curve, KFold, GridSearchCV$/;"	kind:namespace	line:11
 learning_curve	../visuals.py	/^from sklearn.model_selection import learning_curve, validation_curve$/;"	kind:namespace	line:14
 make_scorer	../bj_housing.py	/^from sklearn.metrics import r2_score, make_scorer$/;"	kind:namespace	line:12
-matplotlib	../bj_housing.py	/^import matplotlib.pyplot as pl$/;"	kind:namespace	line:8
+matplotlib	../bj_housing.py	/^import matplotlib.pyplot as plt$/;"	kind:namespace	line:8
 matplotlib	../visuals.py	/^import matplotlib.pyplot as pl$/;"	kind:namespace	line:12
-max_iter	../bj_housing.py	/^    max_iter=500,$/;"	kind:variable	line:193
+max_iter	../bj_housing.py	/^    max_iter=500)$/;"	kind:variable	line:228
 np	../bj_housing.py	/^import numpy as np$/;"	kind:namespace	line:6
 np	../visuals.py	/^import numpy as np$/;"	kind:namespace	line:13
-optimal_reg	../bj_housing.py	/^optimal_reg = fit_model(X_train, y_train)$/;"	kind:variable	line:167
+optimal_reg	../bj_housing.py	/^optimal_reg = fit_model(X_train, y_train)$/;"	kind:variable	line:197
 pd	../bj_housing.py	/^import pandas as pd$/;"	kind:namespace	line:7
-performance_metric	../bj_housing.py	/^def performance_metric(y_true, y_predict):$/;"	kind:function	line:38
-pl	../bj_housing.py	/^import matplotlib.pyplot as pl$/;"	kind:namespace	line:8
+performance_metric	../bj_housing.py	/^def performance_metric(y_true, y_predict):$/;"	kind:function	line:68
 pl	../visuals.py	/^import matplotlib.pyplot as pl$/;"	kind:namespace	line:12
-prices	../bj_housing.py	/^prices = df["Value"]$/;"	kind:variable	line:22
-r2	../bj_housing.py	/^r2 = performance_metric(y_test, y_pred)$/;"	kind:variable	line:177
-r2	../bj_housing.py	/^r2 = performance_metric(y_test, y_pred)$/;"	kind:variable	line:185
-r2	../bj_housing.py	/^r2 = performance_metric(y_test, y_pred)$/;"	kind:variable	line:197
+plt	../bj_housing.py	/^import matplotlib.pyplot as plt$/;"	kind:namespace	line:8
+prices	../bj_housing.py	/^prices = df2["Value"]$/;"	kind:variable	line:39
+r2	../bj_housing.py	/^r2 = performance_metric(y_test, y_pred)$/;"	kind:variable	line:207
+r2	../bj_housing.py	/^r2 = reg.score(X_test, y_test)$/;"	kind:variable	line:214
+r2	../bj_housing.py	/^r2 = reg.score(X_test, y_test)$/;"	kind:variable	line:220
+r2	../bj_housing.py	/^r2 = reg.score(X_test, y_test)$/;"	kind:variable	line:230
 r2_score	../bj_housing.py	/^from sklearn.metrics import r2_score, make_scorer$/;"	kind:namespace	line:12
-reg	../bj_housing.py	/^reg = LinearRegression()$/;"	kind:variable	line:182
-reg	../bj_housing.py	/^reg = MLPRegressor($/;"	kind:variable	line:189
-scaler	../bj_housing.py	/^scaler = MinMaxScaler()$/;"	kind:variable	line:29
-solver	../bj_housing.py	/^    solver='adam',$/;"	kind:variable	line:192
+reg	../bj_housing.py	/^reg = LinearRegression()$/;"	kind:variable	line:212
+reg	../bj_housing.py	/^reg = MLPRegressor($/;"	kind:variable	line:224
+reg	../bj_housing.py	/^reg = SVR(C=800, gamma=5)$/;"	kind:variable	line:218
+scaler	../bj_housing.py	/^scaler = MinMaxScaler()$/;"	kind:variable	line:59
+solver	../bj_housing.py	/^    solver='adam',$/;"	kind:variable	line:227
 train_test_split	../bj_housing.py	/^from sklearn.model_selection import train_test_split, ShuffleSplit, learning_curve, validation_curve, KFold, GridSearchCV$/;"	kind:namespace	line:11
 train_test_split	../visuals.py	/^from sklearn.model_selection import ShuffleSplit, train_test_split$/;"	kind:namespace	line:16
 validation_curve	../bj_housing.py	/^from sklearn.model_selection import train_test_split, ShuffleSplit, learning_curve, validation_curve, KFold, GridSearchCV$/;"	kind:namespace	line:11
 validation_curve	../visuals.py	/^from sklearn.model_selection import learning_curve, validation_curve$/;"	kind:namespace	line:14
-verbose	../bj_housing.py	/^    verbose=True)$/;"	kind:variable	line:194
 visuals.py	../visuals.py	1;"	kind:file	line:1
 warnings	../visuals.py	/^import warnings$/;"	kind:namespace	line:4
-y_pred	../bj_housing.py	/^y_pred = optimal_reg.predict(X_test)$/;"	kind:variable	line:176
-y_pred	../bj_housing.py	/^y_pred = reg.predict(X_test)$/;"	kind:variable	line:184
-y_pred	../bj_housing.py	/^y_pred = reg.predict(X_test)$/;"	kind:variable	line:196
+y_pred	../bj_housing.py	/^y_pred = optimal_reg.predict(X_test)$/;"	kind:variable	line:206
