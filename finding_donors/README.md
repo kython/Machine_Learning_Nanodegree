@@ -54,3 +54,34 @@ jupyter notebook finding_donors.ipynb
 **目标变量**
 
 - `income`: 一个类别变量，表示收入属于那个类别，允许的值有 {<=50K, >50K}
+
+### 项目审阅反馈
+
+#### 集成算法
+你还可以尝试 AdaBoost, Gradient Boosting等集成算法．
+
+其中, Gradient Boosting 是 Kaggle 比赛上很受欢迎的算法, 以下是一个 Kaggler 对GB的详细解释, 鼓励你去看看:
+https://gormanalysis.com/gradient-boosting-explained/
+
+以下这个网页对GB进行了极其badass的可视化:
+http://arogozhnikov.github.io/2016/06/24/gradient_boosting_explained.html
+
+更可以了解"加强版" Gradient Boost---ＸGBoost
+http://machinelearningmastery.com/gentle-introduction-xgboost-applied-machine-learning/
+
+#### 优缺点
+
+关于常见模型的优缺点，以下这个页面给了超级简单的总结:
+http://www.lauradhamilton.com/machine-learning-algorithm-cheat-sheet
+中文的比较好的资料:
+http://bigsec.com/bigsec-news/anan-20161111-jiqixuexi
+其他一些复杂的模型, 比如集成方法的优缺点需要你去一些讨论热烈的地方去寻找, 比如随机森林在Quora就有很好的讨论:
+https://www.quora.com/When-is-a-random-forest-a-poor-choice-relative-to-other-algorithms
+
+还有一个方法就是活用页面搜索，在对应算法的维基百科页, 论文或sklearn user guide中， ctrl + F. 搜索一些评价算法比较关注的词: overfit, accuracy, bias, time, speed, complexity, generalization等以及它们的不同词性．看看它们是怎么被描述的．
+
+但关键还是了解算法的原理，这样才能辨识让人眼花缭乱的网上资料是否准确
+
+应用场景
+
+可以在百度学术搜索，相应模型的名称作为关键词，这样做的好处是你可以在左侧边栏看到不同领域的文章有多少．
