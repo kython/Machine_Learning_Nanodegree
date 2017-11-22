@@ -85,3 +85,39 @@ https://www.quora.com/When-is-a-random-forest-a-poor-choice-relative-to-other-al
 应用场景
 
 可以在百度学术搜索，相应模型的名称作为关键词，这样做的好处是你可以在左侧边栏看到不同领域的文章有多少．
+
+#### 随机调参
+
+`Decision Tree` 的可调参数还是有很多的，所以使用[随机调参](http://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RandomizedSearchCV.html)可以节省由遍历搜索所耗费的大量时间，同时，最终调参得到的模型性能还是有保证的。
+
+![随机调参](img/RandomizedSearchCV.png)
+
+```python
+clf = ... # 模型
+param_dist = ... # 参数列表
+n_iter_search = ... # 你想要搜索的次数
+random_search = RandomizedSearchCV(clf, param_distributions=param_dist, n_iter=n_iter_search)
+random_search.fit(X, y)
+```
+
+可以从这里阅读到gridsearch与randomsearch两者的比较。你也可以从这篇[通俗易懂的论文](http://www.jmlr.org/papers/volume13/bergstra12a/bergstra12a.pdf)了解到更多相关的知识。
+
+> 数据和特征决定了机器学习的上限，而模型和算法只是逼近这个上限而已。
+
+在特征上的提高大部分需要特定领域的知识以及一些insight idea。所以，在这里我们谈谈从算法的角度来逼近这个上限。一般在kaggle比赛上获奖的大多是经过stacking后的融合模型。
+
+- 你可以从[这里](http://blog.kaggle.com/2016/12/27/a-kagglers-guide-to-model-stacking-in-practice/)了解到stacking的基本原理
+- 你可以从[这里](https://www.kaggle.com/arthurtok/introduction-to-ensembling-stacking-in-python)把stacking实践应用到真实的数据上，得到很不错的分数
+- 或许你需要了解这个强大的机器学习的库mlxtend，[像sklearn一样直接调用stacking](https://rasbt.github.io/mlxtend/user_guide/classifier/StackingClassifier/)
+- 尝试得到更大的提高吧
+
+尽管我们得到了一个很不错的模型，但是如果我们把模型完全当成一个黑箱，就会失去挖掘知识的机会，所以一定的数据探索是很有必要的，下面举个用plotly画图的例子(注:在导入plotly的时候，你需要在命令行执行 `pip install plotly` 下载相关的package):
+```python
+import plotly.graph_objs as go
+from plotly.offline import init_notebook_mode, iplot
+init_notebook_mode(connected=True)
+trace1 = go.Histogram(x = X_train[y_train==0]['education-num'].values, name='0') # 这里选择画出柱状图
+trace2 = go.Histogram(x = X_train[y_train==1]['education-num'].values, name='1')
+data = [trace1, trace2]
+iplot(data)
+```
