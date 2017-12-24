@@ -8,8 +8,8 @@ from simulator import Simulator
 
 TEST_NUM = 20 # test episode number
 EPSILON = 1 # explore unknown state
-TOLERANCE = 2e-3 # determine the actual training steps
-LEARNING_RATE = 1e-1 # learn the known state, i.e. update q-table
+TOLERANCE = 4e-5 # 2e-3(round 3000, epsilon=0.998*epsilon) # determine the actual training steps
+LEARNING_RATE = 0.6 # 1e-1(round 3000) # learn the known state, i.e. update q-table
 
 class LearningAgent(Agent):
     """ An agent that learns to drive in the Smartcab world.
@@ -44,7 +44,7 @@ class LearningAgent(Agent):
         ## TO DO ##
         ###########
         # Update epsilon using a decay function of your choice
-        self.epsilon = 0.998*self.epsilon
+        self.epsilon = 0.99*self.epsilon # 0.998
 
         # Update additional class parameters as needed
         # If 'testing' is True, set epsilon and alpha to 0
@@ -129,16 +129,20 @@ class LearningAgent(Agent):
         if not self.learning:
             action = np.random.choice(self.valid_actions)
         else:
-            action_highest_Q, highest_Q = max(self.Q[state].items(), key=lambda k: k[1])
-            
-            #Probabilities of non-greedy actions
-            non_greedy_prob = 1.0 * self.epsilon / len(self.valid_actions)
-            #Probability of the greedy action
-            greedy_prob = 1 - self.epsilon + non_greedy_prob
-            # array containing weight for each action
-            weight_array = np.full((len(self.valid_actions)), non_greedy_prob)
-            weight_array[self.valid_actions.index(action_highest_Q)] = greedy_prob
-            action = np.random.choice(self.valid_actions, 1, p=weight_array)[0]
+            # action_highest_Q, highest_Q = max(self.Q[state].items(), key=lambda k: k[1])
+            # #Probabilities of non-greedy actions
+            # non_greedy_prob = 1.0 * self.epsilon / len(self.valid_actions)
+            # #Probability of the greedy action
+            # greedy_prob = 1 - self.epsilon + non_greedy_prob
+            # # array containing weight for each action
+            # weight_array = np.full((len(self.valid_actions)), non_greedy_prob)
+            # weight_array[self.valid_actions.index(action_highest_Q)] = greedy_prob
+            # action = np.random.choice(self.valid_actions, 1, p=weight_array)[0]
+
+            if np.random.random() < self.epsilon:
+                action = np.random.choice(self.valid_actions)
+            else:
+                action, maxQ = max(self.Q[state].items(), key=lambda k: k[1])
  
         return action
 
@@ -184,7 +188,7 @@ def run():
     #   verbose     - set to True to display additional output from the simulation
     #   num_dummies - discrete number of dummy agents in the environment, default is 100
     #   grid_size   - discrete number of intersections (columns, rows), default is (8, 6)
-    env = Environment(num_dummies=100, verbose=True)
+    env = Environment(num_dummies=100, verbose=False)
     
     ##############
     # Create the driving agent
@@ -207,7 +211,7 @@ def run():
     #   display      - set to False to disable the GUI if PyGame is enabled
     #   log_metrics  - set to True to log trial and simulation results to /logs
     #   optimized    - set to True to change the default log file name
-    sim = Simulator(env, update_delay=1e-4, display=False, log_metrics=True, optimized=True)
+    sim = Simulator(env, update_delay=1e-3, display=False, log_metrics=True, optimized=True)
     
     ##############
     # Run the simulator
