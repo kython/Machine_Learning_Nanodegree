@@ -142,7 +142,9 @@ class LearningAgent(Agent):
             if np.random.random() < self.epsilon:
                 action = np.random.choice(self.valid_actions)
             else:
-                action, maxQ = max(self.Q[state].items(), key=lambda k: k[1])
+                maxQ = max(self.Q[state].values())
+                actions_maxQ = [i[0] for i in self.Q[state].items() if i[1] == maxQ]
+                action = np.random.choice(actions_maxQ)
  
         return action
 
