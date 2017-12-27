@@ -10,6 +10,17 @@ TEST_NUM = 20 # test episode number
 EPSILON = 1 # explore unknown state
 TOLERANCE = 4e-5 # 2e-3(round 3000, epsilon=0.998*epsilon) # determine the actual training steps
 LEARNING_RATE = 0.6 # 1e-1(round 3000) # learn the known state, i.e. update q-table
+GLOBAL_STEP = 1000
+
+def return_decayed_value(starting_value, decay_step, global_step):
+        """Returns the decayed value.
+
+        @param starting_value the value before decaying
+        @param global_step the global step to use for decay (positive integer)
+        @param decay_step the step at which the value is decayed
+        """
+        decayed_value = starting_value * np.cos(decay_step*np.pi/(2*global_step))
+        return decayed_value
 
 class LearningAgent(Agent):
     """ An agent that learns to drive in the Smartcab world.
@@ -30,6 +41,7 @@ class LearningAgent(Agent):
         ## TO DO ##
         ###########
         # Set any additional class parameters as needed
+        self.decay_step = 0
 
 
     def reset(self, destination=None, testing=False):
@@ -45,8 +57,10 @@ class LearningAgent(Agent):
         ###########
         # Update epsilon using a decay function of your choice
         self.epsilon = 0.99*self.epsilon # 0.998
+        # self.epsilon = return_decayed_value(EPSILON, self.decay_step, GLOBAL_STEP)
 
         # Update additional class parameters as needed
+        self.decay_step += 1
         # If 'testing' is True, set epsilon and alpha to 0
         if testing:
             self.epsilon = 0
@@ -85,7 +99,7 @@ class LearningAgent(Agent):
         maxQ = None
 
         if state in self.Q.keys():
-            maxQ = max(q for q in self.Q[state].values())
+            maxQ = max(self.Q[state].values())
 
         return maxQ 
 
@@ -101,12 +115,7 @@ class LearningAgent(Agent):
         #   Then, for each action available (valid_actions = [None, 'forward', 'left', 'right']), set the initial Q-value to 0.0
 
         if state not in self.Q.keys():
-            # Initialize action-value pairs
-            actions_val = dict()
-            for action in self.valid_actions:
-                actions_val[action] = 0
-            # create action-value dictionary for the state
-            self.Q[state] = actions_val
+            self.Q.setdefault(state, {action: 0.0 for action in self.valid_actions})
             
         return
 
